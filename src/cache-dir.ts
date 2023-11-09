@@ -1,7 +1,7 @@
 import { mkdirSync, readFileSync, statSync, writeFileSync } from 'fs'
-import { readFile, writeFile, stat } from 'fs/promises'
+import { readFile, writeFile, stat, mkdir } from 'fs/promises'
 import { appendIgnoreLine } from './ignore'
-import { join } from 'path'
+import { dirname, join } from 'path'
 
 export type CacheDirOptions = {
   /** @default '.cache' */
@@ -37,6 +37,10 @@ export class CacheDir {
     as?: 'string' | 'buffer'
   }): string | Buffer {
     const file = join(this.dir, args.filename)
+    if (args.filename.includes('/') || args.filename.includes('\\')) {
+      const dir = dirname(file)
+      mkdirSync(dir, { recursive: true })
+    }
     try {
       const stats = statSync(file)
       const passedTime = Date.now() - stats.mtimeMs
@@ -69,6 +73,10 @@ export class CacheDir {
     as?: 'string' | 'buffer'
   }): Promise<string | Buffer> {
     const file = join(this.dir, args.filename)
+    if (args.filename.includes('/') || args.filename.includes('\\')) {
+      const dir = dirname(file)
+      await mkdir(dir, { recursive: true })
+    }
     try {
       const stats = await stat(file)
       const passedTime = Date.now() - stats.mtimeMs
