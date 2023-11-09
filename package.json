@@ -34,7 +34,7 @@
     "dist"
   ],
   "scripts": {
-    "test": "tsc --noEmit",
+    "test": "ts-node test/cache-dir-test.ts",
     "build": "tsc -p ."
   },
   "devDependencies": {
