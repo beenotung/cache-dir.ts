@@ -41,7 +41,9 @@ export class CacheDir {
       const stats = statSync(file)
       const passedTime = Date.now() - stats.mtimeMs
       if (passedTime < this.expireInterval) {
-        return readFileSync(file)
+        const buffer = readFileSync(file)
+        if (args.as === 'string') return buffer.toString()
+        return buffer
       }
     } catch (error) {
       // file not exists or name clash with directory
@@ -71,7 +73,9 @@ export class CacheDir {
       const stats = await stat(file)
       const passedTime = Date.now() - stats.mtimeMs
       if (passedTime < this.expireInterval) {
-        return await readFile(file)
+        const buffer = await readFile(file)
+        if (args.as === 'string') return buffer.toString()
+        return buffer
       }
     } catch (error) {
       // file not exists or name clash with directory
