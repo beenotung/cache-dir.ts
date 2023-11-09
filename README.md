@@ -19,6 +19,41 @@ You can install this package using npm/pnpm/yarn/slnpm:
 npm install cache-dir.ts
 ```
 
+## Typescript Signature
+
+Type signature of the main class `CacheDir`
+
+```typescript
+export type CacheDirOptions = {
+  /** @default '.cache' */
+  dir?: string
+
+  /** @default 15*60*1000 (15 minutes) */
+  expireInterval?: number
+
+  /** @default '.gitignore' (false to skip auto append) */
+  gitignore?: string | false
+}
+
+export class CacheDir {
+  constructor(options?: CacheDirOptions)
+
+  runSync(args: { filename: string; fn: () => string; as?: 'string' }): string
+  runSync(args: { filename: string; fn: () => Buffer; as?: 'buffer' }): Buffer
+  runSync(args: { filename: string; fn: () => string | Buffer }): string | Buffer
+
+  runAsync(args: { filename: string; fn: () => Promise<string>; as?: 'string' }): Promise<string>
+  runAsync(args: { filename: string; fn: () => Promise<Buffer>; as?: 'buffer' }): Promise<Buffer>
+  runAsync(args: { filename: string; fn: () => Promise<string | Buffer> }): Promise<string | Buffer>
+}
+```
+
+Type signature of helper function:
+
+```typescript
+export function appendIgnoreLine(file: string, line: string): void;
+```
+
 ## Usage Example
 
 Here is a basic example of how to use the CacheDir class:
