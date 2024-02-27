@@ -2,7 +2,7 @@
 
 Cache and re-use computation result with custom filename and directory.
 
-[![npm Package Version](https://img.shields.io/npm/v/cache-dir.ts)](https://www.npmjs.com/package/cache-dir)
+[![npm Package Version](https://img.shields.io/npm/v/cache-dir.ts)](https://www.npmjs.com/package/cache-dir.ts)
 
 ## Features
 
